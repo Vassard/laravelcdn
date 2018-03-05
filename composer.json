@@ -51,12 +51,6 @@
     }
   },
   "minimum-stability": "stable",
-
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/Vassard/laravelcdn"
-    }
-  ]
+  
 
 }
