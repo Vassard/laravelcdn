@@ -1,5 +1,5 @@
 {
-    "name": "Vassard/laravelcdn",
+    "name": "vassard/laravelcdn",
     "description": "Content Delivery Network (CDN) Package for Laravel",
     "license": "MIT",
     "require": {
