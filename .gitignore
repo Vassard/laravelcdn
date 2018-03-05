@@ -2,3 +2,5 @@
 composer.lock
 .DS_Store
 docs
+.idea
+.idea/vcs.xml

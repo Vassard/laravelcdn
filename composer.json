@@ -1,24 +1,7 @@
 {
-    "name": "publiux/laravelcdn",
+    "name": "Vassard/laravelcdn",
     "description": "Content Delivery Network (CDN) Package for Laravel",
     "license": "MIT",
-    "keywords": [
-      "laravel",
-      "CDN",
-      "upload",
-      "AWS",
-      "S3",
-      "AWS S3",
-      "amazon",
-      "Assets Upload",
-      "Content Delivery Network"
-    ],
-    "authors": [
-        {
-            "name": "Raul Ruiz",
-            "email": "publiux@gmail.com"
-        }
-    ],
     "require": {
         "php": ">=5.5.9",
       "illuminate/support": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*",
