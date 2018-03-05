@@ -49,8 +49,7 @@
         "CDN": "Publiux\\laravelcdn\\Facades\\CdnFacadeAccessor"
       }
     }
-  },
-  "minimum-stability": "stable"
+  }
 
 
 }
