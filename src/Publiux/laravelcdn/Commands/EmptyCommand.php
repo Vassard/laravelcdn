@@ -53,6 +53,6 @@ class EmptyCommand extends Command
      */
     public function handle()
     {
-        $this->cdn->emptyBucket();
+        //$this->cdn->emptyBucket();
     }
 }
