@@ -236,7 +236,7 @@ class AwsS3Provider extends Provider implements ProviderInterface
 
         }
         else
-            $token = Cache::get($token);
+            $token = Cache::get($path);
 
 
 
@@ -431,7 +431,7 @@ class AwsS3Provider extends Provider implements ProviderInterface
     {
         if ($this->getCloudFront() === true) {
             $url = $this->cdn_helper->parseUrl($this->getCloudFrontUrl());
-            return $url['scheme'] . '://' . $url['host'] . $url['path'] . $path.'?id=raarra';
+            return $url['scheme'] . '://' . $url['host'] . $url['path'] . $path;
         }
 
 
