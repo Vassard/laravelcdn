@@ -2,6 +2,7 @@
 
 namespace Publiux\laravelcdn;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Request;
 use Publiux\laravelcdn\Contracts\CdnFacadeInterface;
 use Publiux\laravelcdn\Contracts\CdnHelperInterface;
@@ -49,14 +50,15 @@ class CdnFacade implements CdnFacadeInterface
      * Calls the provider initializer.
      *
      * @param \Publiux\laravelcdn\Contracts\ProviderFactoryInterface $provider_factory
-     * @param \Publiux\laravelcdn\Contracts\CdnHelperInterface       $helper
-     * @param \Publiux\laravelcdn\Validators\CdnFacadeValidator      $cdn_facade_validator
+     * @param \Publiux\laravelcdn\Contracts\CdnHelperInterface $helper
+     * @param \Publiux\laravelcdn\Validators\CdnFacadeValidator $cdn_facade_validator
      */
     public function __construct(
         ProviderFactoryInterface $provider_factory,
         CdnHelperInterface $helper,
         CdnFacadeValidator $cdn_facade_validator
-    ) {
+    )
+    {
         $this->provider_factory = $provider_factory;
         $this->helper = $helper;
         $this->cdn_facade_validator = $cdn_facade_validator;
@@ -109,7 +111,7 @@ class CdnFacade implements CdnFacadeInterface
         // if the package is surpassed, then return the same $path
         // to load the asset from the localhost
         if (isset($this->configurations['bypass']) && $this->configurations['bypass']) {
-            return Request::root().'/'.$path;
+            return Request::root() . '/' . $path;
         }
 
         if (!isset($path)) {
@@ -125,7 +127,7 @@ class CdnFacade implements CdnFacadeInterface
 
         // remove slashes from begging and ending of the path
         // and append directories if needed
-        $clean_path = $prepend.$this->helper->cleanPath($path);
+        $clean_path = $prepend . $this->helper->cleanPath($path);
 
         // call the provider specific url generator
         return $this->provider->urlGenerator($clean_path);
@@ -148,12 +150,31 @@ class CdnFacade implements CdnFacadeInterface
         if (is_null($manifest)) {
             $manifest = json_decode(file_get_contents(public_path('mix-manifest.json')), true);
         }
-        if (isset($manifest['/' . $path])) {
-            return $this->generateUrl($manifest['/' . $path], 'public/');
+
+        if (isset($this->configurations['bypass']) && $this->configurations['bypass']) {
+            if (isset($manifest['/' . $path])) {
+                return $this->generateUrl($manifest['/' . $path], 'public/');
+            }
+            if (isset($manifest[$path])) {
+                return $this->generateUrl($manifest[$path], '');
+            }
         }
-        if (isset($manifest[$path])) {
-            return $this->generateUrl($manifest[$path], 'public/');
+
+        else{
+
+            $token = Cache::get($path);
+
+            if ($token) {
+                $parts = explode('.', $path);
+                $extension = array_pop($parts);
+                array_push($parts, $token, $extension);
+                $path = implode('.', $parts);
+                $path = substr($path, 1);
+            }
+            return $this->generateUrl($path);
+
         }
+
         throw new \InvalidArgumentException("File {$path} not defined in asset manifest.");
     }
 
