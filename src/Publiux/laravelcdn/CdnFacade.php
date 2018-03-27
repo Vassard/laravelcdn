@@ -164,8 +164,6 @@ class CdnFacade implements CdnFacadeInterface
         else{
 
             $token = Cache::get($path);
-            Log::emergency($token);
-            Log::emergency($path);
             if ($token) {
                 $parts = explode('.', $path);
                 $extension = array_pop($parts);
