@@ -4,6 +4,7 @@ namespace Publiux\laravelcdn;
 
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Log;
 use Publiux\laravelcdn\Contracts\CdnFacadeInterface;
 use Publiux\laravelcdn\Contracts\CdnHelperInterface;
 use Publiux\laravelcdn\Contracts\ProviderFactoryInterface;
@@ -162,18 +163,20 @@ class CdnFacade implements CdnFacadeInterface
 
         else{
 
-            dump($path);
-
             $token = Cache::get($path);
-
+            Log::emergency($token);
+            Log::emergency($path);
             if ($token) {
                 $parts = explode('.', $path);
                 $extension = array_pop($parts);
                 array_push($parts, $token, $extension);
                 $path = implode('.', $parts);
                 $path = substr($path, 1);
+
+
+                return $this->generateUrl($path);
             }
-            return $this->generateUrl($path);
+
 
         }
 
