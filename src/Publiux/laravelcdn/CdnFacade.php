@@ -162,6 +162,8 @@ class CdnFacade implements CdnFacadeInterface
 
         else{
 
+            dump($path);
+
             $token = Cache::get($path);
 
             if ($token) {
