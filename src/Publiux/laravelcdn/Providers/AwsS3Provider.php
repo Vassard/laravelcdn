@@ -177,7 +177,7 @@ class AwsS3Provider extends Provider implements ProviderInterface
 
         $manifest = json_decode(file_get_contents(public_path('mix-manifest.json')), true);
 
-
+        dump($manifest);
         // upload each asset file to the CDN
         if (count($assets) > 0) {
             $this->console->writeln('<fg=yellow>Upload in progress......</fg=yellow>');
@@ -188,6 +188,11 @@ class AwsS3Provider extends Provider implements ProviderInterface
                     $key = $this->supplier['upload_folder'] . str_replace('public/', '',str_replace('\\', '/', $file->getPathName()));
 
                     $path = str_replace('public','',str_replace('\\', '/', $file->getPathName()));
+
+                    $this->console->writeln('<fg=cyan>'.'file path: '.$path.'</fg=cyan>');
+
+
+
                     if(isset($manifest[$path])){
                         if (($pos = strpos($manifest[$path], "id=")) !== FALSE) {
                             $token = substr($manifest[$path], $pos+3);
