@@ -187,7 +187,9 @@ class AwsS3Provider extends Provider implements ProviderInterface
 
                     $key = $this->supplier['upload_folder'] . str_replace('public/', '',str_replace('\\', '/', $file->getPathName()));
 
-                    $path = str_replace('public','',str_replace('\\', '/', $file->getPathName()));
+                    $path = str_replace('\\', '/', $file->getPathName());
+
+                    $path = strstr($path,'public');
 
                     $this->console->writeln('<fg=cyan>'.'file path: '.$path.'</fg=cyan>');
 
