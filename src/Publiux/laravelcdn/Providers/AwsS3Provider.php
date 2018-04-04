@@ -191,6 +191,8 @@ class AwsS3Provider extends Provider implements ProviderInterface
 
                     $path = strstr($path,'public');
 
+                    $path = str_replace('public', '', $path);
+
                     $this->console->writeln('<fg=cyan>'.'file path: '.$path.'</fg=cyan>');
 
 
