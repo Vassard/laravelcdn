@@ -203,7 +203,7 @@ class AwsS3Provider extends Provider implements ProviderInterface
                             $key = $this->supplier['upload_folder']. $this->getVersionPath($path, $token);
                         }
                          else{
-                           Cache::forever($path,$key);
+                           Cache::forever($path.'_path',$key);
                         }
                     }
                  
