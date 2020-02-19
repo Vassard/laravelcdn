@@ -175,7 +175,8 @@ class AwsS3Provider extends Provider implements ProviderInterface
         $this->console->writeln('<fg=yellow>Comparing local files and bucket...</fg=yellow>');
         $assets = $this->getFilesAlreadyOnBucket($assets);
 
-        $manifest = json_decode(file_get_contents(public_path('mix-manifest.json')), true);
+        $manifest = array_flip(json_decode(file_get_contents(public_path('mix-manifest.json')), true));
+
 
         dump($manifest);
         // upload each asset file to the CDN
@@ -197,13 +198,13 @@ class AwsS3Provider extends Provider implements ProviderInterface
 
 
 
-                    if(isset($manifest[$path])){
-                        if (($pos = strpos($manifest[$path], "id=")) !== FALSE) {
-                            $token = substr($manifest[$path], $pos+3);
+                 if(isset($manifest[$key])){
+                        if (($pos = strpos($manifest[$key], "id=")) !== FALSE) {
+                            $token = substr($manifest[$key], $pos+3);
                             $key = $this->supplier['upload_folder']. $this->getVersionPath($path, $token);
                         }
                          else{
-                           Cache::forever($path.'_path',$key);
+                           Cache::forever($path.'_path',$manifest[$key]);
                         }
                     }
                  
