@@ -202,7 +202,11 @@ class AwsS3Provider extends Provider implements ProviderInterface
                             $token = substr($manifest[$path], $pos+3);
                             $key = $this->supplier['upload_folder']. $this->getVersionPath($path, $token);
                         }
+                         else{
+                           Cache::forever($path,$key);
+                        }
                     }
+                 
 
                     $this->console->writeln('<fg=cyan>'.'Uploading file path: '.$key.'</fg=cyan>');
 
