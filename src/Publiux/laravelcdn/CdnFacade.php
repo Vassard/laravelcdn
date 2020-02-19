@@ -163,6 +163,11 @@ class CdnFacade implements CdnFacadeInterface
 
         else{
 
+            
+            $item = Cache::get($path.'_path');
+            if($item)
+                 return $this->generateUrl($item);
+            
             $token = Cache::get($path);
             if ($token) {
                 $parts = explode('.', $path);
