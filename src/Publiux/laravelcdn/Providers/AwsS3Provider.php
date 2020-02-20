@@ -198,13 +198,13 @@ class AwsS3Provider extends Provider implements ProviderInterface
 
 
 
-                 if(isset($manifest[$key])){
-                        if (($pos = strpos($manifest[$key], "id=")) !== FALSE) {
-                            $token = substr($manifest[$key], $pos+3);
+                 if(isset($manifest[$path])){
+                        if (($pos = strpos($manifest[$path], "id=")) !== FALSE) {
+                            $token = substr($manifest[$path], $pos+3);
                             $key = $this->supplier['upload_folder']. $this->getVersionPath($path, $token);
                         }
                          else{
-                           Cache::forever($path.'_path',$manifest[$key]);
+                           Cache::forever($manifest[$path].'_path',$path);
                         }
                     }
                  
